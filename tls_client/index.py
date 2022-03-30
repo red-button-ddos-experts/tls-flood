@@ -1,12 +1,12 @@
 import argparse
 import os
 
-import constants
-import ec_curves
-import extensions
-import signature_algorithms
-import tls
-from client import Client
+from tls_client import constants
+from tls_client import ec_curves
+from tls_client import extensions
+from tls_client import signature_algorithms
+from tls_client import tls
+from tls_client.client import Client
 
 
 def args():
@@ -16,14 +16,14 @@ def args():
     return parser.parse_args()
 
 
-if __name__ == '__main__':
+def main():
     parsed_args = args()
     host = parsed_args.host
     port = 443
     # TLSv1.0 is not supported
     tls_version = tls.TLSV1_2()
 
-    extensions = (
+    n_extensions = (
         extensions.ServerNameExtension(host),
         extensions.SignatureAlgorithmExtension((
             signature_algorithms.RsaPkcs1Sha256,
@@ -66,6 +66,6 @@ if __name__ == '__main__':
 
     ssl_key_logfile = os.getenv('SSLKEYLOGFILE')
 
-    client = Client(host, port, tls_version, cipher_suites, extensions=extensions, match_hostname=True,
+    client = Client(host, port, tls_version, cipher_suites, extensions=n_extensions, match_hostname=True,
                     ssl_key_logfile=ssl_key_logfile)
     client.run()

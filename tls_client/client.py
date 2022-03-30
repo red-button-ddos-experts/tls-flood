@@ -3,14 +3,14 @@ import os
 import socket
 from datetime import datetime
 
-import constants
-import tls
-from certificates import get_certificate, load
-from cipher_suites import CIPHER_SUITES, CipherSuite
-from packer import pack, prepend_length, record
-from reader import read
-from print_colors import bcolors
-from extensions import Extension, ApplicationLayerProtocolNegotiationExtension as ALPN
+from tls_client import constants
+from tls_client import tls
+from tls_client.certificates import get_certificate, load
+from tls_client.cipher_suites import CIPHER_SUITES, CipherSuite
+from tls_client.packer import pack, prepend_length, record
+from tls_client.reader import read
+from tls_client.print_colors import bcolors
+from tls_client.extensions import Extension, ApplicationLayerProtocolNegotiationExtension as ALPN
 from cryptography.hazmat.primitives.hashes import SHA256
 
 
@@ -48,7 +48,7 @@ class Client:
         self.ciphers = tuple(CIPHER_SUITES[cipher] for cipher in ciphers if cipher in CIPHER_SUITES)
         self.extensions = extensions
         self.messages = []
-        self.cipher_suite: CipherSuite = None
+        self.cipher_suite = None
         self.server_certificate = None
         self.match_hostname = match_hostname
         self.http_version = None
@@ -218,7 +218,7 @@ class Client:
 
         if self.ssl_key_logfile:
             with open(self.ssl_key_logfile, 'a') as f:
-                f.write(f'CLIENT_RANDOM {self.client_random.hex()} {self.cipher_suite.keys["master_secret"].hex()}\n')
+                f.write('CLIENT_RANDOM' +self.client_random.hex()+self.cipher_suite.keys["master_secret"].hex()+"\n")
 
     @log
     def server_finish(self):
@@ -300,7 +300,7 @@ class Client:
         return result
 
     def run(self):
-        for _ in range(50_000):
+        for _ in range(50000):
             self.client_hello()
 
         self.server_hello()

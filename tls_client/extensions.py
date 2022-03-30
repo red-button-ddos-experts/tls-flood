@@ -1,8 +1,8 @@
 from abc import ABC, abstractmethod
 
-import tls
-import constants
-from packer import prepend_length
+from tls_client import tls
+from tls_client import constants
+from tls_client.packer import prepend_length
 
 
 class Extension(ABC):

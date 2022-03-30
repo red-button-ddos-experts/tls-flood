@@ -6,9 +6,9 @@ from cryptography.hazmat.backends import default_backend
 from cryptography.hazmat.primitives.asymmetric import ec, padding
 from cryptography.hazmat.primitives.serialization import load_der_public_key, Encoding, PublicFormat
 
-import ec_curves
-import signature_algorithms
-import tls
+from tls_client import ec_curves
+from tls_client import signature_algorithms
+from tls_client import tls
 
 
 class KeyExchange(ABC):
@@ -32,7 +32,7 @@ class ECDH(KeyExchange):
 
     def __init__(self, tls_version, client_random, server_random, server_cert, signature_algorithm):
         KeyExchange.__init__(self, tls_version, client_random, server_random, server_cert, signature_algorithm)
-        self.name_curved: ec_curves.ECCurves = None
+        self.name_curved = None
         self.public_key = None
 
     def parse_params(self, params_bytes):

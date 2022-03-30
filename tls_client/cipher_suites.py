@@ -1,11 +1,11 @@
 import math
 
-import constants
-import encryption_algorithms
-import key_exchange
-import signature_algorithms
-import tls
-from prf import prf as _prf
+from tls_client import constants
+from tls_client import encryption_algorithms
+from tls_client import key_exchange
+from tls_client import signature_algorithms
+from tls_client import tls
+from tls_client.prf import prf as _prf
 
 """
 Obtainable from openssl ciphers -V
@@ -1061,7 +1061,7 @@ class CipherSuite:
         self.server_cert = server_cert
         ke = cipher_suite['key_exchange'].split('/')
         args = [tls_version, client_random, server_random, server_cert, ke[1] if len(ke) > 1 else None]
-        self.key_exchange: key_exchange.KeyExchange = getattr(key_exchange, ke[0])(*args)
+        self.key_exchange = getattr(key_exchange, ke[0])(*args)
         self.keys = dict()
 
     def __str__(self):

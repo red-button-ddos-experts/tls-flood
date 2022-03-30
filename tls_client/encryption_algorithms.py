@@ -6,7 +6,7 @@ from cryptography.hazmat.primitives import padding
 from cryptography.hazmat.primitives.ciphers import Cipher, algorithms, modes
 from cryptography.hazmat.primitives.hmac import HMAC
 
-import tls
+from tls_client import tls
 
 
 def hmac_sign(content, key, algorithm):
