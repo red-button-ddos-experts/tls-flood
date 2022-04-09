@@ -80,3 +80,4 @@ def main():
         client = Client(host, port, tls_version, cipher_suites, extensions=n_extensions, match_hostname=True,
                         ssl_key_logfile=ssl_key_logfile)
         client.run()
+        amount += 1
