@@ -1,5 +1,6 @@
 import argparse
 import os
+from time import time
 
 from tls_client import constants
 from tls_client import ec_curves
@@ -67,7 +68,15 @@ def main():
     ssl_key_logfile = os.getenv('SSLKEYLOGFILE')
 
     # for testing stable fire rate
+    start = time()
+    amount = 0
     while True:
+        # monitor seconds
+        if time() - start >= 1:
+            start = time()
+            print(amount)
+            amount = 0
+
         client = Client(host, port, tls_version, cipher_suites, extensions=n_extensions, match_hostname=True,
                         ssl_key_logfile=ssl_key_logfile)
         client.run()
