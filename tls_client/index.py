@@ -13,6 +13,7 @@ from tls_client.client import Client
 def args():
     parser = argparse.ArgumentParser()
     parser.add_argument(dest="host")
+    parser.add_argument(dest="cps")
     parser.add_argument('-c', '--cipher', dest="cipher", default=False, nargs='?')
     return parser.parse_args()
 
@@ -20,6 +21,8 @@ def args():
 def main():
     parsed_args = args()
     host = parsed_args.host
+    max_cps = parsed_args.cps
+
     port = 443
     # TLSv1.0 is not supported
     tls_version = tls.TLSV1_2()
@@ -70,14 +73,19 @@ def main():
     # for testing stable fire rate
     start = time()
     amount = 0
+    print("CPS used is:", max_cps)
+
     while True:
         # monitor seconds
         if time() - start >= 1:
             start = time()
-            print(amount)
+            print("CPS:", amount)
             amount = 0
 
-        client = Client(host, port, tls_version, cipher_suites, extensions=n_extensions, match_hostname=True,
-                        ssl_key_logfile=ssl_key_logfile)
-        client.run()
-        amount += 1
+        # monitor amount
+        if amount <= max_cps:
+            client = Client(host, port, tls_version, cipher_suites, extensions=n_extensions, match_hostname=True,
+                            ssl_key_logfile=ssl_key_logfile)
+            client.run()
+            amount += 1
+            print(amount)
