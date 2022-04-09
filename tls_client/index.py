@@ -88,4 +88,3 @@ def main():
                             ssl_key_logfile=ssl_key_logfile)
             client.run()
             amount += 1
-            print(amount)
