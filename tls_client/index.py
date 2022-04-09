@@ -83,7 +83,7 @@ def main():
             amount = 0
 
         # monitor amount
-        if amount <= max_cps:
+        if amount < max_cps:
             client = Client(host, port, tls_version, cipher_suites, extensions=n_extensions, match_hostname=True,
                             ssl_key_logfile=ssl_key_logfile)
             client.run()
