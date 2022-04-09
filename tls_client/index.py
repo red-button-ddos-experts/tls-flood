@@ -66,6 +66,8 @@ def main():
 
     ssl_key_logfile = os.getenv('SSLKEYLOGFILE')
 
-    client = Client(host, port, tls_version, cipher_suites, extensions=n_extensions, match_hostname=True,
-                    ssl_key_logfile=ssl_key_logfile)
-    client.run()
+    # for testing stable fire rate
+    while True:
+        client = Client(host, port, tls_version, cipher_suites, extensions=n_extensions, match_hostname=True,
+                        ssl_key_logfile=ssl_key_logfile)
+        client.run()

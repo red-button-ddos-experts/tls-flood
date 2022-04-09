@@ -300,12 +300,4 @@ class Client:
         return result
 
     def run(self):
-        for _ in range(50000):
-            self.client_hello()
-
-        self.server_hello()
-        self.client_finish()
-        self.server_finish()
-        self.send_application_data()
-        result = self.receive_application_data()
-        print('Server response', bcolors.OKGREEN, result, bcolors.ENDC)
+        self.client_hello()
