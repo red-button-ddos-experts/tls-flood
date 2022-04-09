@@ -76,7 +76,6 @@ class Client:
             return record, content
         return content
 
-    @log
     def client_hello(self):
         ciphers = b''.join(int(cipher['id'], 16).to_bytes(2, 'big') for cipher in self.ciphers)
 
