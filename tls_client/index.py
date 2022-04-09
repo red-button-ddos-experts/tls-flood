@@ -13,7 +13,7 @@ from tls_client.client import Client
 def args():
     parser = argparse.ArgumentParser()
     parser.add_argument(dest="host")
-    parser.add_argument(dest="cps")
+    parser.add_argument(dest="cps", type=int)
     parser.add_argument('-c', '--cipher', dest="cipher", default=False, nargs='?')
     return parser.parse_args()
 
