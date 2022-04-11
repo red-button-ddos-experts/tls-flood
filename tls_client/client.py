@@ -53,7 +53,11 @@ class Client:
         self.match_hostname = match_hostname
         self.http_version = None
 
-        self.conn = socket.create_connection((host, port))
+        try:
+            self.conn = socket.create_connection((host, port))
+        except ConnectionRefusedError:
+            print("ERROR: Couldn't establish a connection with", host, "on port", port)
+            exit(-1)
         self.debug = debug
         self.ssl_key_logfile = ssl_key_logfile
         self.is_server_key_exchange = None
