@@ -9,6 +9,8 @@ from tls_client import signature_algorithms
 from tls_client import tls
 from tls_client.client import Client
 
+MAX_CPS_ALLOWED = 30
+
 
 def args():
     parser = argparse.ArgumentParser()
@@ -22,6 +24,10 @@ def main():
     parsed_args = args()
     host = parsed_args.host
     max_cps = parsed_args.cps
+
+    if max_cps > MAX_CPS_ALLOWED:
+        max_cps = MAX_CPS_ALLOWED
+        print("Warning: max cps allowed is 30")
 
     port = 443
     # TLSv1.0 is not supported
