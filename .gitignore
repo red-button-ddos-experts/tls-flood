@@ -3,3 +3,4 @@ venv
 .idea
 *.crt
 debug/
+__pycache__
