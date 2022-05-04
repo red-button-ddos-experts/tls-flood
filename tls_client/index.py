@@ -17,6 +17,7 @@ def args():
     parser.add_argument(dest="host")
     parser.add_argument(dest="cps", type=int)
     parser.add_argument('-c', '--cipher', dest="cipher", default=False, nargs='?')
+    parser.add_argument('-v', '--verbose', dest='verbose', action='store_true')
     return parser.parse_args()
 
 
@@ -24,6 +25,8 @@ def main():
     parsed_args = args()
     host = parsed_args.host
     max_cps = parsed_args.cps
+    verbose = parsed_args.verbose
+    print('verbose:', verbose)
 
     if max_cps > MAX_CPS_ALLOWED:
         max_cps = MAX_CPS_ALLOWED
@@ -92,5 +95,5 @@ def main():
         if amount < max_cps:
             client = Client(host, port, tls_version, cipher_suites, extensions=n_extensions, match_hostname=True,
                             ssl_key_logfile=ssl_key_logfile)
-            client.run()
+            client.run(verbose)
             amount += 1
