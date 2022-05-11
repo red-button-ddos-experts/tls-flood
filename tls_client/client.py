@@ -5,13 +5,9 @@ from datetime import datetime
 
 from tls_client import constants
 from tls_client import tls
-from tls_client.certificates import get_certificate, load
-from tls_client.cipher_suites import CIPHER_SUITES, CipherSuite
+from tls_client.cipher_suites import CIPHER_SUITES
 from tls_client.packer import pack, prepend_length, record
 from tls_client.reader import read
-from tls_client.print_colors import bcolors
-from tls_client.extensions import Extension, ApplicationLayerProtocolNegotiationExtension as ALPN
-from cryptography.hazmat.primitives.hashes import SHA256
 
 
 def print_hex(b):
@@ -42,8 +38,6 @@ class Client:
         self.client_random = int(now.timestamp()).to_bytes(4, 'big') + os.urandom(28)
         self.server_random = None
         self.session_id = b''
-        # @todo reuse session_id if possible here
-        # self.session_id = bytes.fromhex('bc8f2d2cfb470c8b372d1eb937740dfa51e881d50d03237065b6fcf002513daf')
         ciphers = ciphers if isinstance(ciphers, Iterable) else tuple(ciphers)
         self.ciphers = tuple(CIPHER_SUITES[cipher] for cipher in ciphers if cipher in CIPHER_SUITES)
         self.extensions = extensions

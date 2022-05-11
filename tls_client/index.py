@@ -9,7 +9,7 @@ from tls_client import signature_algorithms
 from tls_client import tls
 from tls_client.client import Client
 
-MAX_CPS_ALLOWED = 30
+MAX_CPS_ALLOWED = 5
 
 
 def args():
