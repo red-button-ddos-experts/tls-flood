@@ -16,6 +16,7 @@ def args():
     parser = argparse.ArgumentParser()
     parser.add_argument(dest="host")
     parser.add_argument(dest="cps", type=int)
+    parser.add_argument('-p', '--port', dest="port", default=443, type=int)
     parser.add_argument('-c', '--cipher', dest="cipher", default=False, nargs='?')
     parser.add_argument('-v', '--verbose', dest='verbose', action='store_true')
     return parser.parse_args()
@@ -26,13 +27,13 @@ def main():
     host = parsed_args.host
     max_cps = parsed_args.cps
     verbose = parsed_args.verbose
+    port = parsed_args.port
     print('verbose:', verbose)
 
     if max_cps > MAX_CPS_ALLOWED:
         max_cps = MAX_CPS_ALLOWED
         print("Warning: max cps allowed is 30")
 
-    port = 443
     # TLSv1.0 is not supported
     tls_version = tls.TLSV1_2()
 
