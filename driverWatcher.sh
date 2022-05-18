@@ -1,7 +1,13 @@
-echo "kill is running"
+echo "killer is running"
+
 pidof python3.5 > /dev/null
 
-if [[ $? -ne 0]]; then
-  echo "python is not running"
-  pkill -f firefox
-fi
+while [[$? -ne 1]]
+do
+  echo "python is running"
+  sleep 5
+  pidof python3.5 > /dev/null
+done
+
+pkill -f firefox
+echo "done"
