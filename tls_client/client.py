@@ -94,14 +94,14 @@ class Client:
         message = self.record(constants.CONTENT_TYPE_HANDSHAKE, client_hello_bytes, tls_version=tls.TLSV1())
         self.conn.send(message)
 
-        print("--- CLIENT REQUEST ---")
-        self.debug_print('Host', self.host)
-        self.debug_print('Port', self.port)
-        self.debug_print('Client random', print_hex(self.client_random))
-        self.debug_print('Cipher suite suggested',
-                         '{}'.format(', '.join(cipher['openssl_name'] for cipher in self.ciphers)))
-
         if verbose:
+            print("--- CLIENT REQUEST ---")
+            self.debug_print('Host', self.host)
+            self.debug_print('Port', self.port)
+            self.debug_print('Client random', print_hex(self.client_random))
+            self.debug_print('Cipher suite suggested',
+                             '{}'.format(', '.join(cipher['openssl_name'] for cipher in self.ciphers)))
+
             self.verbose_print()
 
     def verbose_print(self):
